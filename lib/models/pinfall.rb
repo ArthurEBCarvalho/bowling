@@ -5,7 +5,7 @@ class Pinfall
   attr_accessor :quantities
 
   AMOUNT_ERROR_MESSAGE = 'The amount must be F or be between 0 and 10'
-  SIZE_ERROR_MESSAGE   = 'This round has only two moves'
+  SIZE_ERROR_MESSAGE   = 'This round has exactly two moves'
 
   def initialize(quantities)
     @quantities = quantities
@@ -26,9 +26,15 @@ class Pinfall
   end
 
   def size_validate!
-    return if quantities.size == 2 || (quantities.size == 3 && quantities[0..1].sum >= 10)
+    return if right_size?
 
     raise InvalidRecord, SIZE_ERROR_MESSAGE
+  end
+
+  def right_size?
+    quantities.size == 2 ||
+      (quantities.size == 3 && quantities[0..1].sum >= 10) ||
+      (quantities.size == 1 && quantities.first == 10)
   end
 
   def amount_validate!

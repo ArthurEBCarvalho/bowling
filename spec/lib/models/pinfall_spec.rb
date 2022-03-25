@@ -22,16 +22,28 @@ RSpec.describe Pinfall do
 
         it { is_expected.to be_truthy }
       end
+
+      context 'with one quantity' do
+        let(:quantities) { [10] }
+
+        it { is_expected.to be_truthy }
+      end
     end
 
     context 'with wrong quantities' do
       subject { -> { Pinfall.new(quantities) } }
 
       let(:amount_error_message) { 'Error: The amount must be F or be between 0 and 10' }
-      let(:size_error_message)   { 'Error: This round has only two moves' }
+      let(:size_error_message)   { 'Error: This round has exactly two moves' }
 
       context 'with three quantities' do
         let(:quantities) { [7, 2, 8] }
+
+        it { is_expected.to raise_error(InvalidRecord, size_error_message) }
+      end
+
+      context 'with one quantities' do
+        let(:quantities) { [9] }
 
         it { is_expected.to raise_error(InvalidRecord, size_error_message) }
       end
