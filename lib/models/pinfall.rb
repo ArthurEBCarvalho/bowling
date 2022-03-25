@@ -5,7 +5,7 @@ class Pinfall
   attr_accessor :quantities
 
   AMOUNT_ERROR_MESSAGE = 'The amount must be F or be between 0 and 10'
-  SIZE_ERROR_MESSAGE   = 'this round has only two moves'
+  SIZE_ERROR_MESSAGE   = 'This round has only two moves'
 
   def initialize(quantities)
     @quantities = quantities

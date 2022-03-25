@@ -28,7 +28,7 @@ RSpec.describe Pinfall do
       subject { -> { Pinfall.new(quantities) } }
 
       let(:amount_error_message) { 'Error: The amount must be F or be between 0 and 10' }
-      let(:size_error_message) { 'Error: this round has only two moves' }
+      let(:size_error_message)   { 'Error: This round has only two moves' }
 
       context 'with three quantities' do
         let(:quantities) { [7, 2, 8] }
