@@ -1,10 +1,11 @@
 require 'pry'
+require 'exceptions/invalid_record'
 
 class Pinfall
   attr_accessor :quantities
 
-  AMOUNT_ERROR_MESSAGE = 'Error: The amount must be F or be between 0 and 10'
-  SIZE_ERROR_MESSAGE   = 'Error: this round has only two moves'
+  AMOUNT_ERROR_MESSAGE = 'The amount must be F or be between 0 and 10'
+  SIZE_ERROR_MESSAGE   = 'this round has only two moves'
 
   def initialize(quantities)
     @quantities = quantities
@@ -27,13 +28,13 @@ class Pinfall
   def size_validate!
     return if quantities.size == 2 || (quantities.size == 3 && quantities[0..1].sum >= 10)
 
-    raise StandardError, SIZE_ERROR_MESSAGE
+    raise InvalidRecord, SIZE_ERROR_MESSAGE
   end
 
   def amount_validate!
     return if only_number? && not_negative? && less_than_or_equal_to_ten?
     
-    raise StandardError, AMOUNT_ERROR_MESSAGE
+    raise InvalidRecord, AMOUNT_ERROR_MESSAGE
   end
 
   def only_number?

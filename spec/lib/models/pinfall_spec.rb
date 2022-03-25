@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'models/pinfall'
+require 'exceptions/invalid_record'
 
 RSpec.describe Pinfall do
   subject { Pinfall.new(quantities) }
@@ -32,25 +33,25 @@ RSpec.describe Pinfall do
       context 'with three quantities' do
         let(:quantities) { [7, 2, 8] }
 
-        it { is_expected.to raise_error(StandardError, size_error_message) }
+        it { is_expected.to raise_error(InvalidRecord, size_error_message) }
       end
 
       context 'with some not integer value' do
         let(:quantities) { [-1, 'A'] }
 
-        it { is_expected.to raise_error(StandardError, amount_error_message) }
+        it { is_expected.to raise_error(InvalidRecord, amount_error_message) }
       end
 
       context 'with some negative value' do
         let(:quantities) { [-1, 2] }
 
-        it { is_expected.to raise_error(StandardError, amount_error_message) }
+        it { is_expected.to raise_error(InvalidRecord, amount_error_message) }
       end
 
       context 'with some value greather than 10' do
         let(:quantities) { [7, 11] }
 
-        it { is_expected.to raise_error(StandardError, amount_error_message) }
+        it { is_expected.to raise_error(InvalidRecord, amount_error_message) }
       end
     end
   end
