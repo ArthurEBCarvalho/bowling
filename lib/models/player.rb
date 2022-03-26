@@ -1,5 +1,6 @@
 require 'pry'
 require 'exceptions/invalid_record'
+require 'services/score_calculator'
 
 class Player
   attr_accessor :name, :pinfalls, :scores
@@ -12,6 +13,8 @@ class Player
     @pinfalls = pinfalls
 
     validate!
+
+    @scores = ScoreCalculator.new(pinfalls).call
   end
 
   private

@@ -1,15 +1,17 @@
 require 'spec_helper'
 require 'models/player'
+require 'models/pinfall'
 require 'exceptions/invalid_record'
 
 RSpec.describe Player do
-  subject { Player.new(name, pinfalls) }
+  subject { player }
+
+  let(:player) { Player.new(name, pinfalls) }
+  let(:name) { 'Arthur' }
+  let(:quantity) { 10 }
+  let(:pinfalls) { quantity.times.map { Pinfall.new([7, 2]) } }
 
   describe 'validations' do
-    let(:name) { 'Arthur' }
-    let(:quantity) { 10 }
-    let(:pinfalls) { quantity.times.map { [7, 2] } }
-
     context 'with right attributes' do
       it { is_expected.to be_truthy }
     end
@@ -38,5 +40,11 @@ RSpec.describe Player do
         it { is_expected.to raise_error(InvalidRecord, name_error_message) }
       end
     end
+  end
+
+  describe '#scores' do
+    subject { player.scores }
+
+    it { is_expected.to eq([9, 18, 27, 36, 45, 54, 63, 72, 81, 90]) }
   end
 end
