@@ -154,4 +154,28 @@ RSpec.describe Pinfall do
       it { is_expected.to be_truthy }
     end
   end
+
+  describe 'to_s' do
+    subject { pinfall.to_s }
+
+    it { is_expected.to eq("7\t2") }
+
+    context 'when is strike' do
+      let(:quantities) { ['10'] }
+
+      it { is_expected.to eq("\tX") }
+    end
+
+    context 'when is spare' do
+      let(:quantities) { ['7', '3'] }
+
+      it { is_expected.to eq("7\t/") }
+    end
+
+    context 'with three times' do
+      let(:quantities) { ['10', '8', '1'] }
+
+      it { is_expected.to eq("X\t8\t1") }
+    end
+  end
 end

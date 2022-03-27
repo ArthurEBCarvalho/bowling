@@ -39,6 +39,14 @@ class Pinfall
     quantities.size == 3
   end
 
+  def to_s
+    return default_to_s if three_times?
+    return "#{quantities.first}\t/" if spare?
+    return "\tX" if strike?
+    
+    default_to_s
+  end
+
   private
 
   def update_fouls
@@ -86,5 +94,9 @@ class Pinfall
 
   def less_than_or_equal_to_ten?
     quantities.select { |quantity| quantity > 10 }.none?
+  end
+
+  def default_to_s
+    quantities.map { |quantity| quantity == 10 ? 'X' : quantity }.join("\t")
   end
 end
