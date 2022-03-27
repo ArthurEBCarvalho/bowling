@@ -1,7 +1,7 @@
 require 'pry'
 
 class ScoreCalculator
-  attr_accessor :pinfalls, :score
+  attr_reader :pinfalls, :score
 
   def initialize(pinfalls)
     @pinfalls = pinfalls
@@ -38,13 +38,13 @@ class ScoreCalculator
   end
 
   def next_pinfall(index)
-    pinfalls[index + 1] || build_next_pinfal(index)
+    pinfalls[index + 1] || default_next_pinfal(index)
   end
 
-  def build_next_pinfal(index)
+  def default_next_pinfal(index)
     total_falled_pins = current_pinfall(index).strike? ? current_pinfall(index).quantities[1] : 0
 
-    Pinfall.new([total_falled_pins, 0])
+    Pinfall.new([total_falled_pins.to_s, '0'])
   end
 
   def related_total_falled_pins(index)

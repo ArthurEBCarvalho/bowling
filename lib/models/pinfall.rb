@@ -12,6 +12,7 @@ class Pinfall
 
     update_fouls
     validate!
+    convert_to_integer
   end
 
   def total_falled_pins
@@ -41,12 +42,12 @@ class Pinfall
   private
 
   def update_fouls
-    quantities.collect! { |quantity| quantity == 'F' ? 0 : quantity }
+    quantities.collect! { |quantity| quantity == 'F' ? '0' : quantity }
   end
 
   def validate!
-    size_validate!
     amount_validate!
+    size_validate!
   end
 
   def size_validate!
@@ -62,13 +63,21 @@ class Pinfall
   end
 
   def amount_validate!
-    return if only_number? && not_negative? && less_than_or_equal_to_ten?
+    return if only_number? && convert_to_integer && not_negative? && less_than_or_equal_to_ten?
     
     raise InvalidRecord, AMOUNT_ERROR_MESSAGE
   end
 
   def only_number?
-    quantities.all? { |quantity| quantity.is_a?(Integer) }
+    quantities.all? { |quantity| is_integer?(quantity) }
+  end
+
+  def is_integer?(number)
+    number.match(/^(\d)+$/)
+  end
+
+  def convert_to_integer
+    quantities.collect!(&:to_i)
   end
 
   def not_negative?

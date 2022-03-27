@@ -9,7 +9,7 @@ RSpec.describe Player do
   let(:player) { Player.new(name, pinfalls) }
   let(:name) { 'Arthur' }
   let(:quantity) { 10 }
-  let(:pinfalls) { quantity.times.map { Pinfall.new([7, 2]) } }
+  let(:pinfalls) { quantity.times.map { Pinfall.new(['7', '2']) } }
 
   describe 'validations' do
     context 'with right attributes' do
