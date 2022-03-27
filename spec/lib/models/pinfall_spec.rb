@@ -177,5 +177,11 @@ RSpec.describe Pinfall do
 
       it { is_expected.to eq("X\t8\t1") }
     end
+
+    context 'with foul' do
+      let(:quantities) { ['F', '6'] }
+
+      it { is_expected.to eq("F\t6") }
+    end
   end
 end

@@ -26,7 +26,7 @@ class ScoreCalculator
 
   def update_pred_score(index)
     score[index - 1] += related_total_falled_pins(index) if pred_pinfall(index).strike?
-    score[index - 1] += current_pinfall(index).quantities.first if pred_pinfall(index).spare?
+    score[index - 1] += current_pinfall(index).quantities.first.to_i if pred_pinfall(index).spare?
   end
 
   def pred_pinfall(index)
