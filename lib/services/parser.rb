@@ -8,12 +8,12 @@ class Parser
   end
 
   def call
-    skip_next = false
+    skip_until = 0
     group_file.map do |name, rounds|
       pinfalls = []
       rounds   = rounds.map { |round| round.split("\t").last.delete("\r\n") }
 
-      populate_pinfalls(pinfalls, rounds, skip_next)
+      populate_pinfalls(pinfalls, rounds, skip_until)
 
       { name => pinfalls }
     end
@@ -25,37 +25,30 @@ class Parser
     File.open(file).group_by { |line| line.split("\t").first }
   end
 
-  def populate_pinfalls(pinfalls, rounds, skip_next)
+  def populate_pinfalls(pinfalls, rounds, skip_until)
     rounds.size.times do |index|
-      if skip_next || last_round?(pinfalls)
-        skip_next = false
-        next
-      end
+      next if skip_until > index
 
-      skip_next = skip_next?(rounds, index, pinfalls)
+      skip_until = skip_until_next_index(rounds, index, pinfalls)
       pinfalls << round_pinfalls(rounds, index, pinfalls)
     end
   end
 
-  def last_round?(pinfalls)
-    pinfalls.size == 10
-  end
-
   def round_pinfalls(rounds, index, pinfalls)
     if last_but_one_round?(pinfalls)
-      [rounds[index], rounds[index + 1], rounds[index + 2]].compact
+      [rounds[index], rounds[index + 1], rounds[index + 2]]
     elsif rounds[index] == '10'
       [rounds[index]]
     else
       [rounds[index], rounds[index + 1]]
-    end
+    end.compact
   end
 
   def last_but_one_round?(pinfalls)
     pinfalls.size == 9
   end
 
-  def skip_next?(rounds, index, pinfalls)
-    !last_but_one_round?(pinfalls) && rounds[index] != '10'
+  def skip_until_next_index(rounds, index, pinfalls)
+    index + round_pinfalls(rounds, index, pinfalls).size
   end
 end

@@ -16,7 +16,15 @@ RSpec.describe Parser do
     context 'with only two times on the last round' do
       let(:file) { file_fixture('full-fouls.txt') }
       let(:player) { { 'Carl' => painfalls } }
-      let(:painfalls) { [['F','F'], ['F','F'], ['F','F'], ['F','F'], ['F','F'], ['F','F'], ['F','F'], ['F','F'], ['F','F'], ['F','F']] }
+      let(:painfalls) { [['F', 'F'], ['F', 'F'], ['F', 'F'], ['F', 'F'], ['F', 'F'], ['F', 'F'], ['F', 'F'], ['F', 'F'], ['F', 'F'], ['F', 'F']] }
+
+      it { is_expected.to eq([player]) }
+    end
+
+    context 'with extra score' do
+      let(:file) { file_fixture('extra-score.txt') }
+      let(:player) { { 'Carl' => painfalls } }
+      let(:painfalls) { [['10'], ['10'], ['10'], ['10'], ['10'], ['10'], ['10'], ['10'], ['10'], ['10', '10', '10'], ['7', '2']] }
 
       it { is_expected.to eq([player]) }
     end
