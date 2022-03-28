@@ -3,8 +3,12 @@ require 'pry'
 class Parser
   attr_reader :file
 
+  EMPTY_FILE_ERROR_MESSAGE = 'The file cannot be empty'
+
   def initialize(file)
     @file = file
+
+    validate!
   end
 
   def call
@@ -21,8 +25,14 @@ class Parser
 
   private
 
+  def validate!
+    return unless group_file.empty?
+
+    raise InvalidRecord, EMPTY_FILE_ERROR_MESSAGE
+  end
+
   def group_file
-    File.open(file).group_by { |line| line.split("\t").first }
+    @group_file ||= File.open(file).group_by { |line| line.split("\t").first }
   end
 
   def populate_pinfalls(pinfalls, rounds, skip_until)

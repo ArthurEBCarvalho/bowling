@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'services/parser'
+require 'exceptions/invalid_record'
 
 RSpec.describe Parser do
   subject { Parser.new(file).call }
@@ -27,6 +28,15 @@ RSpec.describe Parser do
       let(:painfalls) { [['10'], ['10'], ['10'], ['10'], ['10'], ['10'], ['10'], ['10'], ['10'], ['10', '10', '10'], ['7', '2']] }
 
       it { is_expected.to eq([player]) }
+    end
+
+    context 'with empty file' do
+      subject { -> { Parser.new(file).call } }
+
+      let(:file) { file_fixture('empty.txt') }
+      let(:error_message) { 'Error: The file cannot be empty' }
+
+      it { is_expected.to raise_error(InvalidRecord, error_message) }
     end
   end
 end
