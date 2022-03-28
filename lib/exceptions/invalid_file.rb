@@ -1,4 +1,4 @@
 require 'exceptions/base'
 
-class InvalidRecord < Base
+class InvalidFile < Base
 end

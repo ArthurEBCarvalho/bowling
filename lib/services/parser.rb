@@ -28,7 +28,7 @@ class Parser
   def validate!
     return unless group_file.empty?
 
-    raise InvalidRecord, EMPTY_FILE_ERROR_MESSAGE
+    raise InvalidFile, EMPTY_FILE_ERROR_MESSAGE
   end
 
   def group_file

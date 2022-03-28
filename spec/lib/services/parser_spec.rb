@@ -36,7 +36,7 @@ RSpec.describe Parser do
       let(:file) { file_fixture('empty.txt') }
       let(:error_message) { 'Error: The file cannot be empty' }
 
-      it { is_expected.to raise_error(InvalidRecord, error_message) }
+      it { is_expected.to raise_error(InvalidFile, error_message) }
     end
   end
 end
