@@ -10,4 +10,5 @@ Carl	10
 Carl	10
 Carl	10
 Carl	10
-Carl	5
+Carl	7
+Carl	2
