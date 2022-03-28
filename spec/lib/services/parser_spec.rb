@@ -12,5 +12,13 @@ RSpec.describe Parser do
 
   describe '#call' do
     it { is_expected.to eq([player_jeff, player_john]) }
+
+    context 'with only two times on the last round' do
+      let(:file) { file_fixture('full-fouls.txt') }
+      let(:player) { { 'Carl' => painfalls } }
+      let(:painfalls) { [['F','F'], ['F','F'], ['F','F'], ['F','F'], ['F','F'], ['F','F'], ['F','F'], ['F','F'], ['F','F'], ['F','F']] }
+
+      it { is_expected.to eq([player]) }
+    end
   end
 end

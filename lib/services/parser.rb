@@ -43,7 +43,7 @@ class Parser
 
   def round_pinfalls(rounds, index, pinfalls)
     if last_but_one_round?(pinfalls)
-      [rounds[index], rounds[index + 1], rounds[index + 2]]
+      [rounds[index], rounds[index + 1], rounds[index + 2]].compact
     elsif rounds[index] == '10'
       [rounds[index]]
     else
