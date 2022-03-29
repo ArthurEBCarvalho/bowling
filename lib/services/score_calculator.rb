@@ -1,5 +1,6 @@
 require 'pry'
 
+# Service to calculate a player's score
 class ScoreCalculator
   attr_reader :pinfalls, :score
 

@@ -4,9 +4,9 @@ require 'exceptions/invalid_record'
 require 'exceptions/invalid_file'
 
 RSpec.describe Main do
-  context 'when input file is valid' do
-    subject { described_class.new(file).call }
+  subject(:call) { described_class.new(file).call }
 
+  context 'when input file is valid' do
     context 'with two players' do
       let(:file) { file_fixture('scores.txt') }
       let(:result) do
@@ -66,8 +66,6 @@ RSpec.describe Main do
   end
 
   context 'when input file is invalid' do
-    subject { -> { described_class.new(file).call } }
-
     let(:amount_error_message) { 'Error: The amount must be F or be between 0 and 10' }
     let(:size_error_message) { 'Error: The player must have exactly 10 rounds' }
     let(:file_error_message) { 'Error: The file cannot be empty' }
@@ -75,33 +73,31 @@ RSpec.describe Main do
     context 'with invalid characters present' do
       let(:file) { file_fixture('free-text.txt') }
 
-      it { is_expected.to raise_error(InvalidRecord, amount_error_message) }
+      it { expect { call }.to raise_error(InvalidRecord, amount_error_message) }
     end
 
     context 'with invalid score' do
       let(:file) { file_fixture('invalid-score.txt') }
 
-      it { is_expected.to raise_error(InvalidRecord, amount_error_message) }
+      it { expect { call }.to raise_error(InvalidRecord, amount_error_message) }
     end
 
     context 'with negative score' do
       let(:file) { file_fixture('negative.txt') }
 
-      it { is_expected.to raise_error(InvalidRecord, amount_error_message) }
+      it { expect { call }.to raise_error(InvalidRecord, amount_error_message) }
     end
 
     context 'with empty file' do
       let(:file) { file_fixture('empty.txt') }
 
-      it { is_expected.to raise_error(InvalidFile, file_error_message) }
+      it { expect { call }.to raise_error(InvalidFile, file_error_message) }
     end
 
     context 'with invalid number of throwings' do
       let(:file) { file_fixture('extra-score.txt') }
 
-      it { is_expected.to raise_error(InvalidRecord, size_error_message) }
+      it { expect { call }.to raise_error(InvalidRecord, size_error_message) }
     end
-
-    # ArgumentError without file
   end
 end

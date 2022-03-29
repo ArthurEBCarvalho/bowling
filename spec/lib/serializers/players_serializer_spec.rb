@@ -4,38 +4,37 @@ require 'models/player'
 require 'models/pinfall'
 
 RSpec.describe PlayersSerializer do
-  subject { PlayersSerializer.new(players).call }
+  subject { described_class.new([player_jeff, player_john]).call }
 
-  let(:players) { [player_jeff, player_john] }
   let(:player_jeff) { Player.new('Jeff', pinfalls_jeff) }
   let(:pinfalls_jeff) do
     [
       Pinfall.new(['10']),
-      Pinfall.new(['7', '3']),
-      Pinfall.new(['9', '0']),
+      Pinfall.new(%w[7 3]),
+      Pinfall.new(%w[9 0]),
       Pinfall.new(['10']),
-      Pinfall.new(['0', '8']),
-      Pinfall.new(['8', '2']),
-      Pinfall.new(['F', '6']),
+      Pinfall.new(%w[0 8]),
+      Pinfall.new(%w[8 2]),
+      Pinfall.new(%w[F 6]),
       Pinfall.new(['10']),
       Pinfall.new(['10']),
-      Pinfall.new(['10', '8', '1'])
+      Pinfall.new(%w[10 8 1])
     ]
   end
 
   let(:player_john) { Player.new('John', pinfalls_john) }
   let(:pinfalls_john) do
     [
-      Pinfall.new(['3', '7']),
-      Pinfall.new(['6', '3']),
+      Pinfall.new(%w[3 7]),
+      Pinfall.new(%w[6 3]),
       Pinfall.new(['10']),
-      Pinfall.new(['8', '1']),
+      Pinfall.new(%w[8 1]),
       Pinfall.new(['10']),
       Pinfall.new(['10']),
-      Pinfall.new(['9', '0']),
-      Pinfall.new(['7', '3']),
-      Pinfall.new(['4', '4']),
-      Pinfall.new(['10', '9', '0'])
+      Pinfall.new(%w[9 0]),
+      Pinfall.new(%w[7 3]),
+      Pinfall.new(%w[4 4]),
+      Pinfall.new(%w[10 9 0])
     ]
   end
 
@@ -50,6 +49,6 @@ RSpec.describe PlayersSerializer do
       "Score\t\t16\t\t25\t\t44\t\t53\t\t82\t\t101\t\t110\t\t124\t\t132\t\t151"\
     end
 
-    it { binding.pry; is_expected.to eq(result) }
+    it { is_expected.to eq(result) }
   end
 end

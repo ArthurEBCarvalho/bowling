@@ -1,5 +1,6 @@
 require 'pry'
 
+# Serializer to print final score in correct format
 class PlayersSerializer
   attr_reader :players, :lines
 

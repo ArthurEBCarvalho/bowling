@@ -1,12 +1,13 @@
 require 'pry'
-require 'exceptions/invalid_record'
-require 'services/score_calculator'
+require_relative '../exceptions/invalid_record'
+require_relative '../services/score_calculator'
 
+# Model to represents a player
 class Player
   attr_accessor :name, :pinfalls, :scores
 
-  SIZE_ERROR_MESSAGE = 'The player must have exactly 10 rounds'
-  NAME_ERROR_MESSAGE = 'The player must have a name'
+  SIZE_ERROR_MESSAGE = 'The player must have exactly 10 rounds'.freeze
+  NAME_ERROR_MESSAGE = 'The player must have a name'.freeze
 
   def initialize(name, pinfalls)
     @name     = name

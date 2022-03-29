@@ -1,9 +1,10 @@
 require 'pry'
-require 'services/parser'
-require 'models/pinfall'
-require 'models/player'
-require 'serializers/players_serializer'
+require_relative 'services/parser'
+require_relative 'models/pinfall'
+require_relative 'models/player'
+require_relative 'serializers/players_serializer'
 
+# Main file to perform all required steps
 class Main
   attr_reader :file
 
@@ -16,9 +17,9 @@ class Main
   end
 
   private
-  
+
   def build_players
-    players_attributes.map { |attributes| Player.new(attributes.first, attributes[1..-1]) }
+    players_attributes.map { |attributes| Player.new(attributes.first, attributes[1..]) }
   end
 
   def players_attributes

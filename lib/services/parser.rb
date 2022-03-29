@@ -1,9 +1,11 @@
 require 'pry'
+require_relative '../exceptions/invalid_file'
 
+# Service to parse a file
 class Parser
   attr_reader :file
 
-  EMPTY_FILE_ERROR_MESSAGE = 'The file cannot be empty'
+  EMPTY_FILE_ERROR_MESSAGE = 'The file cannot be empty'.freeze
 
   def initialize(file)
     @file = file
